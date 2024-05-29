@@ -5,7 +5,9 @@ import dev.imabad.theatrical.blocks.HangableBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
@@ -15,6 +17,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class BaseLightBlock extends HangableBlock implements EntityBlock {
 
@@ -45,5 +48,13 @@ public abstract class BaseLightBlock extends HangableBlock implements EntityBloc
            }
         }
         return super.getCollisionShape(state, level, pos, context);
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (!level.isClientSide) {
+            System.out.println("hi");
+        }
+        super.setPlacedBy(level, pos, state, placer, stack);
     }
 }
